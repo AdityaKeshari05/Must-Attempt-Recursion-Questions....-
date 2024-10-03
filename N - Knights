@@ -1,0 +1,59 @@
+ static int Knigths( boolean board1[][] , int row){
+        if( row ==  board1.length){
+            display(board1);
+            System.out.println();
+            return 1;
+        }
+        int count =0;
+        for(int col =0;col<board1.length;col++){
+            if(isSafe1(board1,row,col)){
+                board1[row][col] = true;
+                count = count  + Knigths(board1 , row+1);
+                board1[row][col] = false;
+            }
+        }
+        return count;
+    }
+private static boolean isSafe1(boolean board1[][] , int row , int col){
+      if(isValid(board1,row-2,col-1)){
+          if(board1[row-2][col-1]){
+              return false;
+          }
+      }
+        if(isValid(board1,row-2,col+1)){
+            if(board1[row-2][col+1]){
+                return false;
+            }
+        }
+        if(isValid(board1,row-1,col+2)){
+            if(board1[row-1][col+2]){
+                return false;
+            }
+        }
+        if(isValid(board1,row-1,col-2)){
+            if(board1[row-1][col-2]){
+                return false;
+            }
+        }
+        return true;
+    }
+   // do not repeat your cell hence created this function  ..
+    private static boolean isValid(boolean [][] board1 ,int row , int col){
+        if(row>=0 && row<board1.length && col >= 0 && col<board1.length){
+            return true;
+        }
+        return false;
+    }
+ private static void display(boolean board1[][]){
+        for(boolean[]row : board1){
+            for( boolean element : row){
+                if(element){
+                    System.out.print("K ");
+                }else{
+                    System.out.print("X ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
