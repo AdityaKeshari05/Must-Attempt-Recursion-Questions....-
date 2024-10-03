@@ -1,0 +1,83 @@
+ static boolean solve(int[][] board1){
+        int n = board1.length;
+        int row =-1;
+        int col = -1;
+        boolean emptyleft = true;
+        for (int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(board1[i][j] == 0){
+                    row = i;
+                    col =j;
+                    emptyleft = false;
+                    break;
+                }
+            }
+            // if you have found some empty element in row, then break;
+            if(emptyleft == false){
+                break;
+            }
+        }
+        if(emptyleft == true){
+            return true;
+        }
+        for(int i=1;i<=9;i++){
+            if(isSafe(board1,row,col,i)){
+                board1[row][col]  = i;
+                if(solve(board1)){
+                    // found the answer
+                    return true;
+                }else{
+                    // backtrack  ..
+                    board1[row][col] = 0;
+                }
+            }
+        }
+        return false;
+    }
+ static boolean isSafe( int board1[][] , int row , int col , int num){
+        // check the row ..
+        for(int i =0;i< board1.length;i++){
+            if(board1[row][col] == num){
+                return false;
+            }
+        }
+         // check the column ..
+        for(int []nums:board1){
+             // check if tyhe no is in the column ..
+            if(nums[col] == num){
+                return false;
+            }
+        }
+        int sqqrt = (int)(Math.sqrt(board1.length));
+        int rowstart = row  - row%sqqrt;
+        int colstart = col  - col%sqqrt;
+        for(int r = rowstart; r<rowstart+sqqrt;r++){
+            for(int c = colstart;c<colstart+sqqrt;c++){
+                if(board1[r][c] == num){
+                    return false;
+                }
+                }
+            }
+        return true;
+        }
+        private static void display(int[][]board){
+        for(int row[] : board){
+            for(int num : row){
+                System.out.print(num + " ");
+            }
+            System.out.println();
+        }
+        }
+// if you want to display it in a ArrayList.. 
+private static ArrayList<ArrayList<Integer>> displayList(int[][] board){
+        ArrayList<ArrayList<Integer>>list = new ArrayList<>();
+        for(int[]row : board){
+            ArrayList<Integer> list1 = new ArrayList<>();
+            for(int num : row){
+                list1.add(num);
+            }
+            list.add(list1);
+        }
+        return list;
+    }
+
